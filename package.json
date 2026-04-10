@@ -7,6 +7,8 @@
     "dev": "next dev --webpack",
     "prebuild": "node scripts/generate-arco-css.mjs",
     "build": "next build",
+    "prebuild:pages": "node scripts/generate-arco-css.mjs",
+    "build:pages": "GITHUB_PAGES=1 next build",
     "start": "next start",
     "lint": "eslint"
   },
