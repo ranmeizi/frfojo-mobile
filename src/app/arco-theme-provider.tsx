@@ -1,6 +1,7 @@
 "use client";
 
 import { PropsWithChildren } from "react";
+import { createRoot } from "react-dom/client";
 import { ContextProvider } from "@arco-design/mobile-react";
 import { useThemeStore } from "@/stores/theme-store";
 import type { ThemeMode } from "@/stores/theme-store";
@@ -57,6 +58,7 @@ export function ArcoThemeProvider({ children }: PropsWithChildren) {
       isDarkMode={theme === "dark"}
       darkModeSelector="arco-theme-dark"
       theme={ARCO_THEME_MAP[theme]}
+      createRoot={createRoot}
     >
       {children}
     </ContextProvider>

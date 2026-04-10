@@ -13,6 +13,7 @@ import {
   Popup,
   Toast,
 } from "@arco-design/mobile-react";
+import { arcoImperativeContext } from "@/lib/arco-imperative-context";
 import { createStyles } from "@/lib/styles/create-styles";
 
 const useStyles = createStyles((t) => ({
@@ -45,14 +46,14 @@ export default function ExampleFeedback() {
           <Cell
             label="Notify"
             desc="顶部通知"
-            onClick={() => Notify.success("Notify success")}
+            onClick={() => Notify.success("Notify success", arcoImperativeContext)}
             showArrow
             clickable
           />
           <Cell
             label="Toast"
             desc="轻提示"
-            onClick={() => Toast.success("Toast success")}
+            onClick={() => Toast.success("Toast success", arcoImperativeContext)}
             showArrow
             clickable
           />
@@ -68,10 +69,13 @@ export default function ExampleFeedback() {
           <Button
             type="ghost"
             onClick={() =>
-              Dialog.confirm({
-                title: "Confirm",
-                children: "检查 Dialog 的主题是否同步",
-              })
+              Dialog.confirm(
+                {
+                  title: "Confirm",
+                  children: "检查 Dialog 的主题是否同步",
+                },
+                arcoImperativeContext,
+              )
             }
           >
             Dialog

@@ -72,3 +72,17 @@ body {
   height: 100vh;
   height: 100dvh;
 }
+
+/*
+ * Arco Notify（命令式 Notify.success 等）把节点挂在 body 末尾，组件自带样式为 position:relative，
+ * 会排在 #__next 之后落在文档最底部，视口里看不到。Toast 外层有 fixed，无此问题。
+ */
+.arco-notify {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1002;
+  box-sizing: border-box;
+  padding-top: var(--safe-area-top);
+}
