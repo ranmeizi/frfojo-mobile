@@ -8,6 +8,23 @@ export type ThemeMode = "light" | "dark";
 const STORAGE_KEY = "frfojo-theme";
 const ARCO_DARK_CLASS = "arco-theme-dark";
 
+/** 无 window / localStorage 时（Node 预渲染、静态导出）仍须返回可用 storage，否则 persist 中间件不会挂载 `api.persist`，会拖垮 ThemeHydrator 等。 */
+function getThemePersistStorage(): Storage {
+  if (typeof window === "undefined") {
+    return {
+      getItem: () => null,
+      setItem: () => {},
+      removeItem: () => {},
+      clear: () => {},
+      key: () => null,
+      get length() {
+        return 0;
+      },
+    } as Storage;
+  }
+  return window.localStorage;
+}
+
 function getInitialTheme(): ThemeMode {
   if (typeof window === "undefined") {
     return "light";
@@ -53,7 +70,7 @@ export const useThemeStore = create<ThemeStore>()(
     }),
     {
       name: STORAGE_KEY,
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(getThemePersistStorage),
       partialize: (state) => ({ theme: state.theme }),
       skipHydration: true,
     },
