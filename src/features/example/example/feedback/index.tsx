@@ -66,11 +66,11 @@ export default function ExampleFeedback() {
           </Button>
           <Button onClick={() => setActionVisible(true)}>ActionSheet</Button>
           <Button
-            type="outline"
+            type="ghost"
             onClick={() =>
               Dialog.confirm({
                 title: "Confirm",
-                content: "检查 Dialog 的主题是否同步",
+                children: "检查 Dialog 的主题是否同步",
               })
             }
           >
@@ -80,7 +80,11 @@ export default function ExampleFeedback() {
         </div>
       </div>
 
-      <Popup visible={popupVisible} onMaskClick={() => setPopupVisible(false)}>
+      <Popup
+        visible={popupVisible}
+        close={() => setPopupVisible(false)}
+        onMaskClick={() => setPopupVisible(false)}
+      >
         <div className={styles.popupInner}>
           <h3>Popup Content</h3>
           <p>用于检查弹层背景、文字、遮罩。</p>
@@ -92,10 +96,12 @@ export default function ExampleFeedback() {
 
       <ActionSheet
         visible={actionVisible}
-        actions={[{ key: "1", text: "Action 1" }, { key: "2", text: "Action 2" }]}
+        close={() => setActionVisible(false)}
+        items={[
+          { content: "Action 1", onClick: () => setActionVisible(false) },
+          { content: "Action 2", onClick: () => setActionVisible(false) },
+        ]}
         cancelText="取消"
-        onSelect={() => setActionVisible(false)}
-        onCancel={() => setActionVisible(false)}
       />
     </div>
   );

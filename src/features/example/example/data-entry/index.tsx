@@ -46,11 +46,15 @@ export default function ExampleDataEntry() {
     <div className={styles.root}>
       <h2 className={styles.title}>Data Entry</h2>
       <div className={styles.block}>
-        <SearchBar value={search} onChange={setSearch} placeholder="Search..." />
+        <SearchBar
+          value={search}
+          onChange={(_, v) => setSearch(v)}
+          placeholder="Search..."
+        />
         <Divider />
-        <Input value={input} onChange={setInput} placeholder="Input" />
+        <Input value={input} onChange={(_, v) => setInput(v)} placeholder="Input" />
         <Divider />
-        <Textarea value={textarea} onChange={setTextarea} placeholder="Textarea" />
+        <Textarea value={textarea} onChange={(_, v) => setTextarea(v)} placeholder="Textarea" />
       </div>
 
       <div className={styles.block}>
@@ -72,17 +76,20 @@ export default function ExampleDataEntry() {
       </div>
 
       <div className={styles.block}>
-        <Slider value={slider} onChange={setSlider} />
+        <Slider
+          value={slider}
+          onChange={(v) => setSlider(Array.isArray(v) ? v[0] : v)}
+        />
         <Divider />
-        <Stepper value={stepper} onChange={setStepper} />
+        <Stepper value={stepper} onChange={(v) => v != null && setStepper(v)} />
         <Divider />
         <Rate value={rate} onChange={setRate} />
         <Divider />
         <div className={styles.row}>
-          <Button size="mini" type="outline" onClick={() => setSlider((v) => Math.max(0, v - 10))}>
+          <Button size="mini" type="ghost" onClick={() => setSlider((v) => Math.max(0, v - 10))}>
             Slider -10
           </Button>
-          <Button size="mini" type="outline" onClick={() => setSlider((v) => Math.min(100, v + 10))}>
+          <Button size="mini" type="ghost" onClick={() => setSlider((v) => Math.min(100, v + 10))}>
             Slider +10
           </Button>
         </div>

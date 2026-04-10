@@ -54,17 +54,16 @@ export default function ExampleDataDisplay() {
           <Cell label="Another Cell" text="Right Text" bordered={false} />
         </Cell.Group>
         <Divider />
-        <Progress percent={66} />
+        <Progress percentage={66} />
       </div>
 
       <div className={styles.block}>
-        <Tabs defaultActiveTab={0}>
-          <Tabs.Tab title="Tab A" key="a">
-            Tab A content
-          </Tabs.Tab>
-          <Tabs.Tab title="Tab B" key="b">
-            Tab B content
-          </Tabs.Tab>
+        <Tabs
+          defaultActiveTab={0}
+          tabs={[{ title: "Tab A" }, { title: "Tab B" }]}
+        >
+          <div>Tab A content</div>
+          <div>Tab B content</div>
         </Tabs>
         <Divider />
         <Collapse.Group
