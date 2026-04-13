@@ -31,7 +31,7 @@ export function AppBar({ title, rightSlot }: AppBarProps) {
   return (
     <View className={styles.root}>
       <strong className={styles.title}>{title}</strong>
-      <div>{rightSlot}</div>
+      <View>{rightSlot}</View>
     </View>
   );
 }

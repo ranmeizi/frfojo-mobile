@@ -45,7 +45,12 @@ export default function AppTabBar(props: AppTabBarProps) {
     const router = useRouter();
     const pathname = usePathname();
     const styles = useStyles();
-    const activeIndex = tabs.findIndex((tab) => pathname === tab.path || pathname.startsWith(`${tab.path}/`));
+    const activeIndex = tabs.findIndex((tab) => {
+      if (tab.path === "/example") {
+        return pathname === "/example";
+      }
+      return pathname === tab.path || pathname.startsWith(`${tab.path}/`);
+    });
     const mergedActiveIndex = activeIndex >= 0 ? activeIndex : 0;
 
     return (

@@ -86,3 +86,71 @@ body {
   box-sizing: border-box;
   padding-top: var(--safe-area-top);
 }
+
+/*
+ * Mine 列表：Arco Cell 默认按 rem（flexible 根字号）放大，和页面 13/14px 说明文案脱节。
+ * 仅在带 .mine-cell-scope 的 Cell.Group 上覆盖为固定 px，与 theme token 一致。
+ */
+.mine-cell-scope .arco-cell {
+  font-size: 14px;
+  /* 原 margin-left + padding-right 用 rem，和改小的字号不配；改为统一水平 16px */
+  margin-left: 0;
+  padding-left: 16px;
+  padding-right: 16px;
+  box-sizing: border-box;
+}
+.mine-cell-scope .arco-cell .cell-desc {
+  font-size: 12px;
+  line-height: 1.45;
+  margin-top: 2px;
+}
+.mine-cell-scope .arco-cell .cell-content .cell-text {
+  font-size: 13px;
+}
+.mine-cell-scope .arco-cell .cell-label-icon .arco-icon {
+  font-size: 18px;
+}
+.mine-cell-scope .arco-cell .cell-arrow-icon .arco-icon {
+  font-size: 14px;
+}
+/* 原 .arco-cell-inner 固定 height: 1.08rem / has-desc 1.48rem，行高过大 */
+.mine-cell-scope .arco-cell-inner {
+  height: auto !important;
+  min-height: 48px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  box-sizing: border-box;
+}
+.mine-cell-scope .arco-cell-inner.has-desc {
+  height: auto !important;
+  min-height: 56px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  align-items: center;
+}
+.mine-cell-scope .arco-cell .cell-label {
+  margin-right: 12px;
+}
+.mine-cell-scope .arco-cell .cell-label-icon {
+  margin-right: 8px;
+}
+.mine-cell-scope .arco-cell .cell-arrow-icon {
+  margin-left: 8px;
+}
+
+/*
+ * Mine CellGroup 内 Divider：Arco 默认 padding: 0.32rem 0（随 flexible 放大），上下空白过大。
+ * 改为固定 px，左右 16px 与上方 Cell 内容区对齐；margin 清零避免叠边距。
+ */
+.mine-cell-scope .mine-cell-divider.arco-divider {
+  display: flex;
+  margin: 0;
+  padding: 5px 16px;
+  box-sizing: border-box;
+  border-color: var(--token-color-border);
+  opacity: 1;
+}
+.mine-cell-scope .mine-cell-divider.arco-divider::before,
+.mine-cell-scope .mine-cell-divider.arco-divider::after {
+  border-color: var(--token-color-border);
+}

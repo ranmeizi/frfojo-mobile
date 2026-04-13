@@ -15,11 +15,11 @@ import {
   Switch,
   Textarea,
 } from "@arco-design/mobile-react";
+import { View } from "@/components/adapt";
 import { createStyles } from "@/lib/styles/create-styles";
 
 const useStyles = createStyles((t) => ({
   root: { padding: t.space16, background: t.colorPageBg, color: t.colorText },
-  title: { margin: 0, fontSize: t.fontSizeLg },
   block: {
     marginTop: t.space12,
     background: t.colorCard,
@@ -43,9 +43,8 @@ export default function ExampleDataEntry() {
   const [darkLike, setDarkLike] = useState(true);
 
   return (
-    <div className={styles.root}>
-      <h2 className={styles.title}>Data Entry</h2>
-      <div className={styles.block}>
+    <View className={styles.root}>
+      <View className={styles.block}>
         <SearchBar
           value={search}
           onChange={(_, v) => setSearch(v)}
@@ -55,9 +54,9 @@ export default function ExampleDataEntry() {
         <Input value={input} onChange={(_, v) => setInput(v)} placeholder="Input" />
         <Divider />
         <Textarea value={textarea} onChange={(_, v) => setTextarea(v)} placeholder="Textarea" />
-      </div>
+      </View>
 
-      <div className={styles.block}>
+      <View className={styles.block}>
         <Cell.Group bordered={false}>
           <Cell label="Switch" bordered={false}>
             <Switch checked={darkLike} onChange={setDarkLike} platform="ios" />
@@ -73,9 +72,9 @@ export default function ExampleDataEntry() {
           <Checkbox value="a">Checkbox A</Checkbox>
           <Checkbox value="b">Checkbox B</Checkbox>
         </Checkbox.Group>
-      </div>
+      </View>
 
-      <div className={styles.block}>
+      <View className={styles.block}>
         <Slider
           value={slider}
           onChange={(v) => setSlider(Array.isArray(v) ? v[0] : v)}
@@ -85,15 +84,15 @@ export default function ExampleDataEntry() {
         <Divider />
         <Rate value={rate} onChange={setRate} />
         <Divider />
-        <div className={styles.row}>
+        <View className={styles.row}>
           <Button size="mini" type="ghost" onClick={() => setSlider((v) => Math.max(0, v - 10))}>
             Slider -10
           </Button>
           <Button size="mini" type="ghost" onClick={() => setSlider((v) => Math.min(100, v + 10))}>
             Slider +10
           </Button>
-        </div>
-      </div>
-    </div>
+        </View>
+      </View>
+    </View>
   );
 }

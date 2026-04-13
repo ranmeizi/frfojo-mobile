@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Cell } from "@arco-design/mobile-react";
+import { View } from "@/components/adapt";
 import { createStyles } from "@/lib/styles/create-styles";
 
 const useStyles = createStyles((t) => ({
@@ -36,7 +37,7 @@ export default function Example() {
   const styles = useStyles();
 
   return (
-    <div className={styles.root}>
+    <View className={styles.root}>
       <h1 className={styles.title}>Arco Example Center</h1>
       <p className={styles.desc}>按功能拆分子路由，便于全面检查主题适配效果</p>
 
@@ -70,11 +71,19 @@ export default function Example() {
             label="Navigation"
             desc={<span className={styles.itemDesc}>NavBar, TabBar, Divider, Button（导航相关主题验证）</span>}
             style={{ minHeight: 68 }}
+            showArrow
+          />
+        </Link>
+        <Link href="/example/pull-refresh">
+          <Cell
+            label="Pull Refresh"
+            desc={<span className={styles.itemDesc}>下拉刷新（Arco PullRefresh + 空 onRefresh）</span>}
+            style={{ minHeight: 68 }}
             bordered={false}
             showArrow
           />
         </Link>
       </Cell.Group>
-    </div>
+    </View>
   );
 }

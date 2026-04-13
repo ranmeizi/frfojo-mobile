@@ -1,5 +1,5 @@
-import Mine from "@/features/example/mine";
+import Mine from "@/features/mine";
 
 export default function MinePage() {
-    return <Mine/>
+  return <Mine />;
 }

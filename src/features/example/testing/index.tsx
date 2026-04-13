@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
 import { useEffect, useState } from "react";
 import { Cell, Switch } from "@arco-design/mobile-react";
+import { View } from "@/components/adapt";
 import { createStyles } from "@/lib/styles/create-styles";
 import { useThemeStore } from "@/stores/theme-store";
 
@@ -52,7 +53,7 @@ export default function Testing() {
     }, []);
 
     return (
-        <div className={styles.root}>
+        <View className={styles.root}>
             <h1 className={styles.title}>Testing</h1>
             <p className={styles.desc}>这里放所有测试功能入口</p>
 
@@ -74,6 +75,6 @@ export default function Testing() {
                     )}
                 </Cell>
             </Cell.Group>
-        </div>
+        </View>
     );
 }

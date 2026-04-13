@@ -4,4 +4,5 @@ export * from "./Button";
 export * from "./Input";
 export * from "./Image";
 export * from "./ScrollView";
+export * from "./PullToRefresh";
 export * from "./types";

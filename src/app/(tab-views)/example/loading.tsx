@@ -1,16 +1,17 @@
 "use client";
 
 import { Skeleton } from "@arco-design/mobile-react";
+import { View } from "@/components/adapt";
 
 export default function ExampleLoading() {
   return (
-    <div style={{ padding: 16 }}>
+    <View style={{ padding: 16 }}>
       <Skeleton title={{ width: 170 }} paragraph={false} />
-      <div style={{ marginTop: 8 }}>
+      <View style={{ marginTop: 8 }}>
         <Skeleton title={{ width: 240 }} paragraph={false} />
-      </div>
+      </View>
 
-      <div
+      <View
         style={{
           marginTop: 16,
           background: "var(--token-color-card)",
@@ -21,7 +22,7 @@ export default function ExampleLoading() {
         }}
       >
         {[0, 1, 2, 3].map((item) => (
-          <div
+          <View
             key={item}
             style={{
               minHeight: 68,
@@ -30,12 +31,12 @@ export default function ExampleLoading() {
             }}
           >
             <Skeleton title={{ width: 116 }} paragraph={false} />
-            <div style={{ marginTop: 8 }}>
+            <View style={{ marginTop: 8 }}>
               <Skeleton title={{ width: 260 }} paragraph={false} />
-            </div>
-          </div>
+            </View>
+          </View>
         ))}
-      </div>
-    </div>
+      </View>
+    </View>
   );
 }

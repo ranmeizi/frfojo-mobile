@@ -33,9 +33,9 @@ export function HeaderBar({ title, leftSlot }: HeaderBarProps) {
 
   return (
     <View className={styles.root}>
-      <div className={styles.side}>{leftSlot}</div>
+      <View className={styles.side}>{leftSlot}</View>
       <strong className={styles.title}>{title}</strong>
-      <div className={styles.side} />
+      <View className={styles.side} />
     </View>
   );
 }

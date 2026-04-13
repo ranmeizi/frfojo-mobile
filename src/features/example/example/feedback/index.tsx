@@ -13,12 +13,12 @@ import {
   Popup,
   Toast,
 } from "@arco-design/mobile-react";
+import { View } from "@/components/adapt";
 import { arcoImperativeContext } from "@/lib/arco-imperative-context";
 import { createStyles } from "@/lib/styles/create-styles";
 
 const useStyles = createStyles((t) => ({
   root: { padding: t.space16, background: t.colorPageBg, color: t.colorText },
-  title: { margin: 0, fontSize: t.fontSizeLg },
   block: {
     marginTop: t.space12,
     background: t.colorCard,
@@ -36,10 +36,8 @@ export default function ExampleFeedback() {
   const [actionVisible, setActionVisible] = useState(false);
 
   return (
-    <div className={styles.root}>
-      <h2 className={styles.title}>Feedback & Overlay</h2>
-
-      <div className={styles.block}>
+    <View className={styles.root}>
+      <View className={styles.block}>
         <NoticeBar>Theme check: notice, loading, toast, dialog, popup, action-sheet.</NoticeBar>
         <Divider />
         <Cell.Group bordered={false}>
@@ -58,10 +56,10 @@ export default function ExampleFeedback() {
             clickable
           />
         </Cell.Group>
-      </div>
+      </View>
 
-      <div className={styles.block}>
-        <div className={styles.row}>
+      <View className={styles.block}>
+        <View className={styles.row}>
           <Button type="primary" onClick={() => setPopupVisible(true)}>
             Open Popup
           </Button>
@@ -81,21 +79,21 @@ export default function ExampleFeedback() {
             Dialog
           </Button>
           <Loading />
-        </div>
-      </div>
+        </View>
+      </View>
 
       <Popup
         visible={popupVisible}
         close={() => setPopupVisible(false)}
         onMaskClick={() => setPopupVisible(false)}
       >
-        <div className={styles.popupInner}>
+        <View className={styles.popupInner}>
           <h3>Popup Content</h3>
           <p>用于检查弹层背景、文字、遮罩。</p>
           <Button type="primary" onClick={() => setPopupVisible(false)}>
             Close
           </Button>
-        </div>
+        </View>
       </Popup>
 
       <ActionSheet
@@ -107,6 +105,6 @@ export default function ExampleFeedback() {
         ]}
         cancelText="取消"
       />
-    </div>
+    </View>
   );
 }

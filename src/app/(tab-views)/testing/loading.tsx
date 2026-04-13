@@ -1,16 +1,17 @@
 "use client";
 
 import { Skeleton } from "@arco-design/mobile-react";
+import { View } from "@/components/adapt";
 
 export default function TestingLoading() {
   return (
-    <div style={{ padding: 16 }}>
+    <View style={{ padding: 16 }}>
       <Skeleton title={{ width: 92 }} paragraph={false} />
-      <div style={{ marginTop: 8 }}>
+      <View style={{ marginTop: 8 }}>
         <Skeleton title={{ width: 168 }} paragraph={false} />
-      </div>
-      <div style={{ marginTop: 16 }}>
-        <div
+      </View>
+      <View style={{ marginTop: 16 }}>
+        <View
           style={{
             background: "var(--token-color-card)",
             border: "1px solid var(--token-color-border)",
@@ -19,7 +20,7 @@ export default function TestingLoading() {
             overflow: "hidden",
           }}
         >
-          <div
+          <View
             style={{
               display: "flex",
               alignItems: "center",
@@ -28,18 +29,18 @@ export default function TestingLoading() {
               padding: "12px 16px",
             }}
           >
-            <div style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>
               <Skeleton title={{ width: 80 }} paragraph={false} />
-              <div style={{ marginTop: 6 }}>
+              <View style={{ marginTop: 6 }}>
                 <Skeleton title={{ width: 150 }} paragraph={false} />
-              </div>
-            </div>
-            <div style={{ width: 42, marginLeft: 12 }}>
+              </View>
+            </View>
+            <View style={{ width: 42, marginLeft: 12 }}>
               <Skeleton title={{ width: 42 }} paragraph={false} />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
   );
 }
