@@ -17,7 +17,7 @@ export type PullToRefreshProps = Omit<ArcoPullRefreshProps, "children"> & {
 export function PullToRefresh({ children, type = "android", ...rest }: PullToRefreshProps) {
   return (
     <PullRefresh type={type} {...rest}>
-      <View>{children}</View>
+      <View style={{ height: "100%" }}>{children}</View>
     </PullRefresh>
   );
 }

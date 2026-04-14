@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties, ReactNode } from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { AnimatePresence, motion } from "motion/react";
 import { View } from "./View";
@@ -24,7 +24,7 @@ export interface VirtualListProps<T> {
   loadMoreRows: (startIndex: number, stopIndex: number) => Promise<void>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   RowComponent: ListProps<any>["rowComponent"];
-  height?: number;
+  height?: number | string;
   rowHeight?: number;
   loading?: boolean;
   endReachedThreshold?: number;
@@ -64,42 +64,57 @@ export function VirtualList<T>({
 
   const virtualItems = virtualizer.getVirtualItems();
 
-  const loadRange = useMemo(() => {
-    if (count === 0 || virtualItems.length === 0) {
-      return null;
-    }
-    const start = virtualItems[0].index;
-    const end = Math.min(count - 1, virtualItems[virtualItems.length - 1].index + endReachedThreshold);
-    let loadStart = -1;
-    let loadStop = -1;
-    for (let i = start; i <= end; i += 1) {
-      if (!isRowLoaded(i)) {
-        if (loadStart === -1) {
-          loadStart = i;
-        }
-        loadStop = i;
-      }
-    }
-    if (loadStart === -1) {
-      return null;
-    }
-    return { start: loadStart, stop: loadStop };
-  }, [count, virtualItems, endReachedThreshold, isRowLoaded]);
-
   useEffect(() => {
-    if (!loadRange || loading || pendingRef.current) {
+    const el = parentRef.current;
+    if (!el) {
       return;
     }
-    const rangeKey = `${loadRange.start}:${loadRange.stop}`;
-    if (pendingRangeRef.current === rangeKey) {
-      return;
-    }
-    pendingRef.current = true;
-    pendingRangeRef.current = rangeKey;
-    void loadMoreRows(loadRange.start, loadRange.stop).finally(() => {
-      pendingRef.current = false;
-    });
-  }, [loadRange, loadMoreRows, loading]);
+    const maybeLoadMore = () => {
+      if (loading || pendingRef.current || count === 0 || virtualItems.length === 0) {
+        return;
+      }
+      // 仅在容器可滚动时才做“接近底部”判断，避免高度链异常导致持续触发。
+      if (el.scrollHeight <= el.clientHeight + 1) {
+        return;
+      }
+      const distanceToBottom = el.scrollHeight - (el.scrollTop + el.clientHeight);
+      const thresholdPx = rowHeight * endReachedThreshold;
+      if (distanceToBottom > thresholdPx) {
+        return;
+      }
+
+      const start = virtualItems[0].index;
+      const end = Math.min(count - 1, virtualItems[virtualItems.length - 1].index + endReachedThreshold);
+      let loadStart = -1;
+      let loadStop = -1;
+      for (let i = start; i <= end; i += 1) {
+        if (!isRowLoaded(i)) {
+          if (loadStart === -1) {
+            loadStart = i;
+          }
+          loadStop = i;
+        }
+      }
+      if (loadStart === -1) {
+        return;
+      }
+      const rangeKey = `${loadStart}:${loadStop}`;
+      if (pendingRangeRef.current === rangeKey) {
+        return;
+      }
+      pendingRef.current = true;
+      pendingRangeRef.current = rangeKey;
+      void loadMoreRows(loadStart, loadStop).finally(() => {
+        pendingRef.current = false;
+      });
+    };
+
+    maybeLoadMore();
+    el.addEventListener("scroll", maybeLoadMore, { passive: true });
+    return () => {
+      el.removeEventListener("scroll", maybeLoadMore);
+    };
+  }, [count, endReachedThreshold, isRowLoaded, loadMoreRows, loading, rowHeight, virtualItems]);
 
   useEffect(() => {
     const el = parentRef.current;
@@ -135,6 +150,7 @@ export function VirtualList<T>({
           justifyContent: "center",
           color: "var(--token-color-text-tertiary)",
           fontSize: 13,
+          minHeight: 0,
         }}
       >
         {emptyMessage}
@@ -143,8 +159,8 @@ export function VirtualList<T>({
   }
 
   return (
-    <View style={{ position: "relative" }}>
-      <div ref={parentRef} style={{ height, overflowY: "auto", WebkitOverflowScrolling: "touch" }}>
+    <View style={{ position: "relative", height, minHeight: 0 }}>
+      <div ref={parentRef} style={{ height: "100%", overflowY: "auto", WebkitOverflowScrolling: "touch" }}>
         <View style={{ height: virtualizer.getTotalSize(), position: "relative", width: "100%" }}>
           {virtualItems.map((virtualItem) => {
             const index = virtualItem.index;

@@ -2,14 +2,14 @@
 
 import type { CSSProperties } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { PullToRefresh, ScrollView, View, VirtualList } from "@/components/adapt";
+import { PullToRefresh, View, VirtualList } from "@/components/adapt";
 import type { ListProps } from "@/components/adapt";
 import { createStyles } from "@/lib/styles/create-styles";
 
 const ITEM_HEIGHT = 92;
-const LIST_HEIGHT = 520;
 const TOTAL_COUNT = 2000;
 const PAGE_SIZE = 30;
+const FALLBACK_LIST_HEIGHT = 520;
 
 type MessageItem = {
   id: string;
@@ -23,27 +23,19 @@ const useStyles = createStyles((t) => ({
   fill: {
     flex: 1,
     minHeight: 0,
+    height: "100%",
     display: "flex",
     flexDirection: "column",
-  },
-  body: {
-    padding: t.space16,
-    paddingBottom: t.space32,
+    overflow: "hidden",
     background: t.colorPageBg,
-    color: t.colorText,
-  },
-  hint: {
-    marginBottom: t.space12,
-    fontSize: t.fontSizeSm,
-    color: t.colorTextSecondary,
-    lineHeight: t.lineHeightLoose,
   },
   listViewport: {
-    height: LIST_HEIGHT,
-    borderRadius: t.radiusLg,
+    minHeight: 0,
+    margin: t.space12,
     border: `1px solid ${t.colorBorder}`,
+    borderRadius: t.radiusLg,
+    overflow: "hidden",
     background: t.colorCard,
-    overflow: "auto",
   },
   listInner: {
     position: "relative",
@@ -104,8 +96,27 @@ export default function ExamplePullRefresh() {
   const styles = useStyles();
   const [messages, setMessages] = useState<MessageItem[]>([]);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [listHeight, setListHeight] = useState(FALLBACK_LIST_HEIGHT);
   const hasMore = messages.length < TOTAL_COUNT;
   const initializedRef = useRef(false);
+
+  useEffect(() => {
+    const updateListHeight = () => {
+      const viewportHeight = window.innerHeight || FALLBACK_LIST_HEIGHT;
+      const headerEl = document.querySelector(".arco-nav-bar-wrap, .arco-nav-bar") as HTMLElement | null;
+      const headerHeight = headerEl?.getBoundingClientRect().height ?? 0;
+      // 上下 margin 为 12 + 12
+      const available = Math.floor(viewportHeight - headerHeight - 24);
+      setListHeight(Math.max(240, available));
+    };
+    updateListHeight();
+    window.addEventListener("resize", updateListHeight);
+    window.addEventListener("orientationchange", updateListHeight);
+    return () => {
+      window.removeEventListener("resize", updateListHeight);
+      window.removeEventListener("orientationchange", updateListHeight);
+    };
+  }, []);
 
   const isRowLoaded = (index: number) => !hasMore || index < messages.length;
   const loadMoreRows = useCallback(async (_startIndex: number, stopIndex: number) => {
@@ -179,35 +190,30 @@ export default function ExamplePullRefresh() {
 
   return (
     <View className={styles.fill}>
-      <ScrollView scrollY style={{ height: "100%" }}>
-        <View className={styles.body}>
-          <View className={styles.hint}>
-            下拉刷新仅作用于列表区域；初始不预塞大数据，全部由 loadMoreRows 分批加载。
-          </View>
-          <PullToRefresh
-            onRefresh={async () => {
-              await new Promise((r) => setTimeout(r, 350));
-              setMessages([]);
-              await loadMoreRows(0, PAGE_SIZE - 1);
-            }}
-          >
-            <View className={styles.listViewport}>
-              <VirtualList<MessageItem>
-                rows={messages}
-                rowCount={messages.length + (hasMore ? 1 : 0)}
-                isRowLoaded={isRowLoaded}
-                loadMoreRows={loadMoreRows}
-                RowComponent={RowComponent}
-                height={LIST_HEIGHT}
-                rowHeight={ITEM_HEIGHT}
-                loading={loadingMore}
-                endReachedThreshold={10}
-                emptyMessage={loadingMore ? "加载中..." : "暂无消息，下拉刷新或下滑触发加载"}
-              />
-            </View>
-          </PullToRefresh>
+      <PullToRefresh
+        style={{ height: listHeight }}
+        allowPullWhenNotTop={false}
+        onRefresh={async () => {
+          await new Promise((r) => setTimeout(r, 350));
+          setMessages([]);
+          await loadMoreRows(0, PAGE_SIZE - 1);
+        }}
+      >
+        <View className={styles.listViewport} style={{ height: listHeight }}>
+          <VirtualList<MessageItem>
+            rows={messages}
+            rowCount={messages.length + (hasMore ? 1 : 0)}
+            isRowLoaded={isRowLoaded}
+            loadMoreRows={loadMoreRows}
+            RowComponent={RowComponent}
+            height={listHeight}
+            rowHeight={ITEM_HEIGHT}
+            loading={loadingMore}
+            endReachedThreshold={10}
+            emptyMessage={loadingMore ? "加载中..." : "暂无消息，下拉刷新或下滑触发加载"}
+          />
         </View>
-      </ScrollView>
+      </PullToRefresh>
     </View>
   );
 }
