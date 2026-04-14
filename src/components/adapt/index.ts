@@ -5,4 +5,5 @@ export * from "./Input";
 export * from "./Image";
 export * from "./ScrollView";
 export * from "./PullToRefresh";
+export * from "./VirtualList";
 export * from "./types";
