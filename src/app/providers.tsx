@@ -6,7 +6,6 @@ import { ThemeHydrator } from "./theme-hydrator";
 import setRootPixel from "@arco-design/mobile-react/tools/flexible";
 import { ArcoThemeProvider } from "./arco-theme-provider";
 import { View } from "@/components/adapt";
-import { KeepAliveProvider } from "@/lib/keepalive/KeepAliveProvider";
 
 type AppProvidersProps = {
   children: ReactNode;
@@ -32,7 +31,7 @@ export function AppProviders({ children }: AppProvidersProps) {
             zIndex: "300",
           }}
         >
-          <KeepAliveProvider>{children}</KeepAliveProvider>
+          {children}
         </View>
       </ArcoThemeProvider>
     </EmotionProvider>

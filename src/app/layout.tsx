@@ -3,6 +3,7 @@ import { AppProviders } from "@/app/providers";
 import { ViewTransitions } from "next-view-transitions";
 import "./arco.css";
 import "./style.css";
+import { createStyles } from "@/lib/styles/create-styles";
 
 /**
  * 首屏主题预初始化脚本（Pre-hydration Theme Init Script）
@@ -113,12 +114,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="zh-CN" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: ROOT_PIXEL_INIT_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"></meta>
+        <style>
+          {
+            `body{
+              height:100vh;
+              height:100dvh;
+            }`
+          }
+        </style>
       </head>
       <body>
         <ViewTransitions>

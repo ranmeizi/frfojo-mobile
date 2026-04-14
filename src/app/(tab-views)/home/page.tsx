@@ -1,6 +1,10 @@
 import Home from "@/features/example/home";
-import { Button } from "@arco-design/mobile-react";
+import { Page } from "@/components/layout/Page";
 
 export default function HomePage() {
-    return <Home/>
+    return (
+        <Page keepAlive>
+            <Home />
+        </Page>
+    );
 }

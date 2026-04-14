@@ -1,5 +1,10 @@
 import Mine from "@/features/mine";
+import { Page } from "@/components/layout/Page";
 
 export default function MinePage() {
-  return <Mine />;
+  return (
+    <Page keepAlive>
+      <Mine />
+    </Page>
+  );
 }

@@ -163,7 +163,6 @@ export default function Mine() {
           </View>
         </View>
       </Link>
-      <Input placeholder="请输入内容" />
       <MineSectionLabel first>快捷入口</MineSectionLabel>
       <View className={styles.quickGrid}>
         {[

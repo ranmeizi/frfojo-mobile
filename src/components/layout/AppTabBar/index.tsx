@@ -3,8 +3,7 @@
 import { TabBar } from '@arco-design/mobile-react';
 import { TabBarProps } from '@arco-design/mobile-react/cjs/tab-bar';
 import { IconHome, IconKeyboard, IconSetting, IconUser } from '@arco-design/mobile-react/esm/icon';
-import { usePathname } from 'next/navigation';
-import { useTransitionRouter } from 'next-view-transitions';
+import { usePathname, useRouter } from 'next/navigation';
 import { createStyles } from "@/lib/styles/create-styles";
 import { View } from "@/components/adapt";
 
@@ -43,7 +42,7 @@ const useStyles = createStyles((t) => ({
 }));
 
 export default function AppTabBar(props: AppTabBarProps) {
-    const router = useTransitionRouter();
+    const router = useRouter();
     const pathname = usePathname();
     const styles = useStyles();
     const activeIndex = tabs.findIndex((tab) => {
