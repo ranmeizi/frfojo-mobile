@@ -1,6 +1,5 @@
 import { ScrollView, View } from "@/components/adapt";
 import AppTabBar from "@/components/layout/AppTabBar";
-import { KeepAliveProvider } from "@/lib/keepalive/KeepAliveProvider";
 
 export default function TabViewsLayout({ children }: { children: React.ReactNode }) {
     return (
