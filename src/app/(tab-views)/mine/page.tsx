@@ -3,7 +3,7 @@ import { Page } from "@/components/layout/Page";
 
 export default function MinePage() {
   return (
-    <Page keepAlive>
+    <Page>
       <Mine />
     </Page>
   );
