@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { Cell } from "@arco-design/mobile-react";
 import { View } from "@/components/adapt";
 import { MineDivider } from "@/features/mine/ui";

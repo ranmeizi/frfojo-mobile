@@ -29,20 +29,18 @@ const nextConfig: NextConfig = {
     return config;
   },
   allowedDevOrigins: [
-    "192.168.240.230",
-    "localhost",
-    "127.0.0.1",
-    "0.0.0.0",
+    "*"
   ],
   ...(isGithubPages
     ? {
-        output: "export",
-        images: { unoptimized: true },
-        trailingSlash: true,
-        basePath,
-        assetPrefix: basePath || undefined,
-      }
+      output: "export",
+      images: { unoptimized: true },
+      trailingSlash: true,
+      basePath,
+      assetPrefix: basePath || undefined,
+    }
     : {}),
+  reactStrictMode: false
 };
 
 export default nextConfig;

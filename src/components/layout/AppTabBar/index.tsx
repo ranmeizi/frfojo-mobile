@@ -3,7 +3,8 @@
 import { TabBar } from '@arco-design/mobile-react';
 import { TabBarProps } from '@arco-design/mobile-react/cjs/tab-bar';
 import { IconHome, IconKeyboard, IconSetting, IconUser } from '@arco-design/mobile-react/esm/icon';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { useTransitionRouter } from 'next-view-transitions';
 import { createStyles } from "@/lib/styles/create-styles";
 import { View } from "@/components/adapt";
 
@@ -42,20 +43,20 @@ const useStyles = createStyles((t) => ({
 }));
 
 export default function AppTabBar(props: AppTabBarProps) {
-    const router = useRouter();
+    const router = useTransitionRouter();
     const pathname = usePathname();
     const styles = useStyles();
     const activeIndex = tabs.findIndex((tab) => {
-      if (tab.path === "/example") {
-        return pathname === "/example";
-      }
-      return pathname === tab.path || pathname.startsWith(`${tab.path}/`);
+        if (tab.path === "/example") {
+            return pathname === "/example";
+        }
+        return pathname === tab.path || pathname.startsWith(`${tab.path}/`);
     });
     const mergedActiveIndex = activeIndex >= 0 ? activeIndex : 0;
 
     return (
         <View className={styles.root}>
-            <TabBar {...props} fixed={false} activeIndex={mergedActiveIndex}>
+            <TabBar {...props} fixed={false} activeIndex={mergedActiveIndex} style={{ zIndex: 3000 }}>
                 {tabs.map((tab, index) => (
                     <TabBar.Item title={tab.title} icon={tab.icon} key={index} onClick={() => router.replace(tab.path)} />
                 ))}

@@ -1,8 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import Link from "next/link";
-import { Avatar, Button, Cell, Dialog, Toast } from "@arco-design/mobile-react";
+import { Link } from "next-view-transitions";
+import { Avatar, Button, Cell, Dialog, Input, Toast } from "@arco-design/mobile-react";
 import {
   IconArrowDown,
   IconEdit,
@@ -163,7 +163,7 @@ export default function Mine() {
           </View>
         </View>
       </Link>
-
+      <Input placeholder="请输入内容" />
       <MineSectionLabel first>快捷入口</MineSectionLabel>
       <View className={styles.quickGrid}>
         {[

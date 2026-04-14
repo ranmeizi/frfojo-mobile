@@ -154,3 +154,47 @@ body {
 .mine-cell-scope .mine-cell-divider.arco-divider::after {
   border-color: var(--token-color-border);
 }
+
+/*
+ * View Transitions（next-view-transitions）
+ * 默认整页过渡：旧页淡出左移 + 新页弹入（pop-in）。
+ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 280ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(root) {
+  animation-name: ffj-vt-old-out;
+}
+
+::view-transition-new(root) {
+  animation-name: ffj-vt-new-pop-in;
+}
+
+@keyframes ffj-vt-old-out {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0.35;
+    transform: translateX(-10%) scale(0.98);
+    filter: blur(2px);
+  }
+}
+
+@keyframes ffj-vt-new-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.92);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}

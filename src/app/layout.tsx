@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AppProviders } from "@/app/providers";
+import { ViewTransitions } from "next-view-transitions";
 import "./arco.css";
 import "./style.css";
 
@@ -120,7 +121,9 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"></meta>
       </head>
       <body>
-        <AppProviders>{children}</AppProviders>
+        <ViewTransitions>
+          <AppProviders>{children}</AppProviders>
+        </ViewTransitions>
       </body>
     </html>
   );

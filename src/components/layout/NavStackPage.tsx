@@ -1,9 +1,9 @@
 "use client";
 
 import type { PropsWithChildren } from "react";
-import { useRouter } from "next/navigation";
 import { ScrollView, View } from "@/components/adapt";
 import { AppNavBar } from "@/components/layout/AppNavBar";
+import { useTransitionRouter } from "next-view-transitions";
 
 export type NavStackPageProps = PropsWithChildren<{
   title: string;
@@ -13,7 +13,7 @@ export type NavStackPageProps = PropsWithChildren<{
 
 /** 无底部 Tab 的二级栈页：顶栏返回 + 可滚动内容（与 Example 子栈一致） */
 export function NavStackPage({ title, children, scroll = true }: NavStackPageProps) {
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   return (
     <View style={{ display: "flex", flexDirection: "column", height: "100%" }}>
