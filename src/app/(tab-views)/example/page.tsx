@@ -5,7 +5,7 @@ import { Page } from "@/components/layout/Page";
 export default async function ExamplePage() {
   // await sleep(1000);
   return (
-    <Page keepAlive>
+    <Page>
       <Example />
     </Page>
   );

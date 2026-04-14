@@ -12,7 +12,6 @@ type AppProvidersProps = {
 };
 
 export function AppProviders({ children }: AppProvidersProps) {
-  /** KeepAlive 在内部时不会因缓存卸载本层，flexible 可安全挂在此处 */
   useEffect(() => {
     const remove = setRootPixel();
     return remove;
