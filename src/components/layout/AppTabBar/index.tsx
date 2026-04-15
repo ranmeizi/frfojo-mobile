@@ -70,7 +70,6 @@ export default function AppTabBar(props: AppTabBarProps) {
         immersive = false,
         className: tabBarClassName,
         style: tabBarStyle,
-        customStyle,
         activeCustomStyle,
         ...tabBarRest
     } = props;
@@ -82,9 +81,6 @@ export default function AppTabBar(props: AppTabBarProps) {
         return matchTabPath(pathname, tab.path, tab.path === "/example");
     });
     const mergedActiveIndex = activeIndex >= 0 ? activeIndex : 0;
-    const mergedCustomStyle = immersive
-        ? { color: "color-mix(in srgb, var(--token-color-text-inverse) 62%, transparent)", ...customStyle }
-        : { color: tokens.colorTextSecondary, ...customStyle };
     const mergedActiveCustomStyle = immersive
         ? { color: "var(--token-color-text-inverse)", ...activeCustomStyle }
         : { color: tokens.colorPrimary, ...activeCustomStyle };
@@ -95,8 +91,7 @@ export default function AppTabBar(props: AppTabBarProps) {
                 {...tabBarRest}
                 fixed={false}
                 activeIndex={mergedActiveIndex}
-                className={[immersive ? "app-tab-bar-immersive" : "", tabBarClassName].filter(Boolean).join(" ") || undefined}
-                customStyle={mergedCustomStyle}
+                className={[immersive ? "app-tab-bar-immersive" : "app-tab-bar-default", tabBarClassName].filter(Boolean).join(" ") || undefined}
                 activeCustomStyle={mergedActiveCustomStyle}
                 style={{ zIndex: 3000, ...tabBarStyle }}
             >

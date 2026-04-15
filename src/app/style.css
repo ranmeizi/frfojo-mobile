@@ -220,6 +220,10 @@ body {
   color: var(--token-color-text-inverse) !important;
 }
 
+.app-tab-bar-default .arco-tab-bar-item {
+  color: var(--token-color-text-secondary) !important;
+}
+
 /*
  * 沉浸 Tab：去掉顶侧「灰边/阴影」观感。
  * 来源通常是外层 token 的 box-shadow，或透明叠层下的对比错觉；这里对 Arco 根节点显式清零。
