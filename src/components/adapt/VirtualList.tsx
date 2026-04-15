@@ -4,6 +4,8 @@ import type { CSSProperties, ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { AnimatePresence, motion } from "motion/react";
+import type { PullToRefreshProps } from "./PullToRefresh";
+import { PullToRefresh } from "./PullToRefresh";
 import { View } from "./View";
 
 export type RowComponentProps<T> = {
@@ -33,6 +35,13 @@ export interface VirtualListProps<T> {
   backToTopShowThreshold?: number;
   /** 滚动回到该值以下后隐藏回顶按钮（用于防抖） */
   backToTopHideThreshold?: number;
+  /**
+   * 传入则在 VirtualList 内包裹 `PullToRefresh`，并根据真实滚动容器的 scrollTop 自动合并 `disabled`
+   *（修复 Arco PullRefresh 只检测自身根节点、无法感知内部虚拟列表滚动的问题）。
+   */
+  pullToRefresh?: Omit<PullToRefreshProps, "children">;
+  /** 判定「在顶部」的像素容差（配合 pullToRefresh） */
+  atTopEpsilon?: number;
 }
 
 export function VirtualList<T>({
@@ -48,11 +57,14 @@ export function VirtualList<T>({
   emptyMessage = "暂无数据",
   backToTopShowThreshold = 520,
   backToTopHideThreshold = 320,
+  pullToRefresh,
+  atTopEpsilon = 1,
 }: VirtualListProps<T>) {
   const parentRef = useRef<HTMLDivElement | null>(null);
   const pendingRef = useRef(false);
   const pendingRangeRef = useRef<string | null>(null);
   const [showBackTop, setShowBackTop] = useState(false);
+  const [scrollAtTop, setScrollAtTop] = useState(true);
 
   const count = Math.max(0, rowCount);
   const virtualizer = useVirtualizer({
@@ -140,25 +152,46 @@ export function VirtualList<T>({
     };
   }, [backToTopHideThreshold, backToTopShowThreshold]);
 
-  if (count === 0) {
-    return (
-      <View
-        style={{
-          height,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "var(--token-color-text-tertiary)",
-          fontSize: 13,
-          minHeight: 0,
-        }}
-      >
-        {emptyMessage}
-      </View>
-    );
-  }
+  useEffect(() => {
+    if (!pullToRefresh) {
+      return;
+    }
+    if (count === 0) {
+      setScrollAtTop(true);
+      return;
+    }
+    const el = parentRef.current;
+    if (!el) {
+      return;
+    }
+    const sync = () => {
+      const atTop = el.scrollTop <= atTopEpsilon;
+      setScrollAtTop((prev) => (prev === atTop ? prev : atTop));
+    };
+    sync();
+    el.addEventListener("scroll", sync, { passive: true });
+    return () => {
+      el.removeEventListener("scroll", sync);
+    };
+  }, [atTopEpsilon, count, pullToRefresh]);
 
-  return (
+  const empty = (
+    <View
+      style={{
+        height,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "var(--token-color-text-tertiary)",
+        fontSize: 13,
+        minHeight: 0,
+      }}
+    >
+      {emptyMessage}
+    </View>
+  );
+
+  const list = (
     <View style={{ position: "relative", height, minHeight: 0 }}>
       <div ref={parentRef} style={{ height: "100%", overflowY: "auto", WebkitOverflowScrolling: "touch" }}>
         <View style={{ height: virtualizer.getTotalSize(), position: "relative", width: "100%" }}>
@@ -215,6 +248,24 @@ export function VirtualList<T>({
         ) : null}
       </AnimatePresence>
     </View>
+  );
+
+  const body = count === 0 ? empty : list;
+
+  if (!pullToRefresh) {
+    return body;
+  }
+
+  const { disabled: prDisabled, allowPullWhenNotTop: prAllowNotTop, style: prStyle, ...prRest } = pullToRefresh;
+  return (
+    <PullToRefresh
+      {...prRest}
+      disabled={prDisabled !== undefined ? prDisabled : !scrollAtTop}
+      allowPullWhenNotTop={prAllowNotTop !== undefined ? prAllowNotTop : false}
+      style={{ minHeight: 0, height, ...prStyle }}
+    >
+      {body}
+    </PullToRefresh>
   );
 }
 

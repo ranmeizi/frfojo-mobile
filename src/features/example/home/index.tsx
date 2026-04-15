@@ -1,11 +1,7 @@
 "use client";
 
-import { View } from "@/components/adapt";
+import { VideoFeedScreen } from "./components/VideoFeedScreen";
 
 export default function Home() {
-  return (
-    <View>
-      <h1>Home</h1>
-    </View>
-  );
+  return <VideoFeedScreen />;
 }

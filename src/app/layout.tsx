@@ -120,7 +120,10 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: ROOT_PIXEL_INIT_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"></meta>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+        />
         <style>
           {
             `body{

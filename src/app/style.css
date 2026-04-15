@@ -197,3 +197,36 @@ body {
     filter: blur(0);
   }
 }
+
+/* Home 全屏视频：固定暗色沉浸观感，不跟随全局深浅色 token */
+.home-feed-immersive {
+  color: #fff;
+  color-scheme: dark;
+}
+
+/* Swiper 纵向全屏：保证 slide 撑满可视区域 */
+.home-feed-swiper-host .home-feed-swiper-inner .swiper,
+.home-feed-swiper-host .home-feed-swiper-inner .swiper-wrapper,
+.home-feed-swiper-host .home-feed-swiper-inner .swiper-slide {
+  height: 100%;
+}
+
+/* Home 沉浸底栏：透明背景上的白色导航（未选中略淡、选中纯白，与主题无关） */
+.app-tab-bar-immersive .arco-tab-bar-item {
+  color: rgba(255, 255, 255, 0.62) !important;
+}
+
+.app-tab-bar-immersive .arco-tab-bar-item-active {
+  color: #ffffff !important;
+}
+
+/*
+ * 沉浸 Tab：去掉顶侧「灰边/阴影」观感。
+ * 来源通常是外层 token 的 box-shadow，或透明叠层下的对比错觉；这里对 Arco 根节点显式清零。
+ */
+.app-tab-bar-immersive.arco-tab-bar {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+}

@@ -2,7 +2,7 @@
 
 import type { CSSProperties } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { PullToRefresh, View, VirtualList } from "@/components/adapt";
+import { View, VirtualList } from "@/components/adapt";
 import type { ListProps } from "@/components/adapt";
 import { createStyles } from "@/lib/styles/create-styles";
 
@@ -190,30 +190,28 @@ export default function ExamplePullRefresh() {
 
   return (
     <View className={styles.fill}>
-      <PullToRefresh
-        style={{ height: listHeight }}
-        allowPullWhenNotTop={false}
-        onRefresh={async () => {
-          await new Promise((r) => setTimeout(r, 350));
-          setMessages([]);
-          await loadMoreRows(0, PAGE_SIZE - 1);
-        }}
-      >
-        <View className={styles.listViewport} style={{ height: listHeight }}>
-          <VirtualList<MessageItem>
-            rows={messages}
-            rowCount={messages.length + (hasMore ? 1 : 0)}
-            isRowLoaded={isRowLoaded}
-            loadMoreRows={loadMoreRows}
-            RowComponent={RowComponent}
-            height={listHeight}
-            rowHeight={ITEM_HEIGHT}
-            loading={loadingMore}
-            endReachedThreshold={10}
-            emptyMessage={loadingMore ? "加载中..." : "暂无消息，下拉刷新或下滑触发加载"}
-          />
-        </View>
-      </PullToRefresh>
+      <View className={styles.listViewport} style={{ height: listHeight }}>
+        <VirtualList<MessageItem>
+          rows={messages}
+          rowCount={messages.length + (hasMore ? 1 : 0)}
+          isRowLoaded={isRowLoaded}
+          loadMoreRows={loadMoreRows}
+          RowComponent={RowComponent}
+          height={listHeight}
+          rowHeight={ITEM_HEIGHT}
+          loading={loadingMore}
+          endReachedThreshold={10}
+          emptyMessage={loadingMore ? "加载中..." : "暂无消息，下拉刷新或下滑触发加载"}
+          pullToRefresh={{
+            allowPullWhenNotTop: false,
+            onRefresh: async () => {
+              await new Promise((r) => setTimeout(r, 350));
+              setMessages([]);
+              await loadMoreRows(0, PAGE_SIZE - 1);
+            },
+          }}
+        />
+      </View>
     </View>
   );
 }
