@@ -4,8 +4,10 @@ import { TabBar } from '@arco-design/mobile-react';
 import { TabBarProps } from '@arco-design/mobile-react/cjs/tab-bar';
 import { IconHome, IconKeyboard, IconSetting, IconUser } from '@arco-design/mobile-react/esm/icon';
 import { usePathname, useRouter } from 'next/navigation';
-import { createStyles } from "@/lib/styles/create-styles";
+import { createStyles, useTokens } from "@/lib/styles/create-styles";
 import { View } from "@/components/adapt";
+import TabIconMotion from "@/components/widgets/tab/TabIconMotion";
+import TabLabelMotion from "@/components/widgets/tab/TabLabelMotion";
 
 type AppTabBarProps = {
   /** Home 全屏视频：透明底栏 + 白色图标/文案，叠在画面上方 */
@@ -15,25 +17,38 @@ type AppTabBarProps = {
 const tabs = [
     {
         title: 'Home',
-        icon: <IconHome />,
+        icon: IconHome,
         path: '/home'
     },
     {
         title: 'Testing',
-        icon: <IconKeyboard />,
+        icon: IconKeyboard,
         path: '/testing'
     },
     {
         title: 'Example',
-        icon: <IconSetting />,
+        icon: IconSetting,
         path: '/example'
     },
     {
         title: 'Mine',
-        icon: <IconUser />,
+        icon: IconUser,
         path: '/mine'
     }
 ]
+
+function escapeRegex(source: string) {
+    return source.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function matchTabPath(pathname: string, tabPath: string, exact: boolean) {
+    const tabSegment = tabPath.replace(/^\/+/, "");
+    const safeSegment = escapeRegex(tabSegment);
+    const pattern = exact
+        ? new RegExp(`(?:^|\\/)${safeSegment}\\/?$`)
+        : new RegExp(`(?:^|\\/)${safeSegment}(?:\\/|$)`);
+    return pattern.test(pathname);
+}
 
 const useStyles = createStyles((t) => ({
     root: {
@@ -51,17 +66,28 @@ const useStyles = createStyles((t) => ({
 }));
 
 export default function AppTabBar(props: AppTabBarProps) {
-    const { immersive = false, className: tabBarClassName, style: tabBarStyle, activeCustomStyle, ...tabBarRest } = props;
+    const {
+        immersive = false,
+        className: tabBarClassName,
+        style: tabBarStyle,
+        customStyle,
+        activeCustomStyle,
+        ...tabBarRest
+    } = props;
     const router = useRouter();
     const pathname = usePathname();
     const styles = useStyles();
+    const tokens = useTokens();
     const activeIndex = tabs.findIndex((tab) => {
-        if (tab.path === "/example") {
-            return pathname === "/example";
-        }
-        return pathname === tab.path || pathname.startsWith(`${tab.path}/`);
+        return matchTabPath(pathname, tab.path, tab.path === "/example");
     });
     const mergedActiveIndex = activeIndex >= 0 ? activeIndex : 0;
+    const mergedCustomStyle = immersive
+        ? { color: "color-mix(in srgb, var(--token-color-text-inverse) 62%, transparent)", ...customStyle }
+        : { color: tokens.colorTextSecondary, ...customStyle };
+    const mergedActiveCustomStyle = immersive
+        ? { color: "var(--token-color-text-inverse)", ...activeCustomStyle }
+        : { color: tokens.colorPrimary, ...activeCustomStyle };
 
     return (
         <View className={immersive ? styles.rootImmersive : styles.root}>
@@ -70,12 +96,22 @@ export default function AppTabBar(props: AppTabBarProps) {
                 fixed={false}
                 activeIndex={mergedActiveIndex}
                 className={[immersive ? "app-tab-bar-immersive" : "", tabBarClassName].filter(Boolean).join(" ") || undefined}
-                activeCustomStyle={immersive ? { color: "#ffffff", ...activeCustomStyle } : activeCustomStyle}
+                customStyle={mergedCustomStyle}
+                activeCustomStyle={mergedActiveCustomStyle}
                 style={{ zIndex: 3000, ...tabBarStyle }}
             >
-                {tabs.map((tab, index) => (
-                    <TabBar.Item title={tab.title} icon={tab.icon} key={index} onClick={() => router.replace(tab.path)} />
-                ))}
+                {tabs.map((tab, index) => {
+                    const Icon = tab.icon;
+                    const isActive = index === mergedActiveIndex;
+                    return (
+                        <TabBar.Item
+                            title={<TabLabelMotion text={tab.title} active={isActive} immersive={immersive} />}
+                            icon={<TabIconMotion icon={<Icon />} active={isActive} immersive={immersive} />}
+                            key={index}
+                            onClick={() => router.replace(tab.path)}
+                        />
+                    );
+                })}
             </TabBar>
         </View>
     );

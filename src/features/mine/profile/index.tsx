@@ -20,9 +20,14 @@ const useStyles = createStyles((t) => ({
     boxShadow: t.shadow1,
   },
   avatarRing: {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 3,
     borderRadius: t.radiusRound,
     background: `linear-gradient(135deg, ${t.colorBorder} 0%, ${t.colorBgTertiary} 100%)`,
+    lineHeight: 0,
+    boxSizing: "content-box",
   },
   avatarBlock: {
     display: "flex",

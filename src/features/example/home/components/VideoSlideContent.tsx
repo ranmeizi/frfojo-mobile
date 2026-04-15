@@ -57,12 +57,12 @@ const metaBlock: CSSProperties = {
 
 const rightRail: CSSProperties = {
   position: "absolute",
-  right: "0.2rem",
-  bottom: "2.35rem",
+  right: "0.16rem",
+  bottom: "calc(1.02rem + var(--safe-area-bottom) + 0.76rem)",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  gap: "0.32rem",
+  gap: "0.34rem",
   color: "#fff",
   pointerEvents: "auto",
   zIndex: 4,
@@ -72,20 +72,20 @@ const railBtn: CSSProperties = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  gap: "0.06rem",
+  gap: "0.08rem",
   padding: 0,
   margin: 0,
   border: "none",
   background: "transparent",
   color: "inherit",
   cursor: "pointer",
-  fontSize: "0.44rem",
+  fontSize: "0.48rem",
   lineHeight: 1,
   textShadow: "0 1px 3px rgba(0,0,0,0.65)",
 };
 
 const railCap: CSSProperties = {
-  fontSize: "0.2rem",
+  fontSize: "0.22rem",
   opacity: 0.92,
   textShadow: "0 1px 2px rgba(0,0,0,0.6)",
 };
@@ -95,6 +95,7 @@ const railCap: CSSProperties = {
  */
 export function VideoSlideContent({ item, active, style }: VideoSlideContentProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const rafIdRef = useRef<number | null>(null);
   const [userPaused, setUserPaused] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -129,6 +130,30 @@ export function VideoSlideContent({ item, active, style }: VideoSlideContentProp
     }
     setCurrentTime(el.currentTime);
   }, [seeking]);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el || !active || userPaused || seeking) {
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
+      }
+      return;
+    }
+    const tick = () => {
+      // 短视频在 timeupdate 事件频率下会有“颗粒感”，用 rAF 连续读 currentTime 平滑位移。
+      const now = el.currentTime;
+      setCurrentTime((prev) => (Math.abs(prev - now) < 0.008 ? prev : now));
+      rafIdRef.current = requestAnimationFrame(tick);
+    };
+    rafIdRef.current = requestAnimationFrame(tick);
+    return () => {
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
+      }
+    };
+  }, [active, userPaused, seeking, item.src]);
 
   const onLoadedMeta = useCallback(() => {
     const el = videoRef.current;

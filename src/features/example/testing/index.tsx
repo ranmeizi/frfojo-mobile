@@ -5,6 +5,7 @@ import { Cell, Switch } from "@arco-design/mobile-react";
 import { View } from "@/components/adapt";
 import { createStyles } from "@/lib/styles/create-styles";
 import { useThemeStore } from "@/stores/theme-store";
+import { useTransitionRouter } from "next-view-transitions";
 
 const useStyles = createStyles((t) => ({
     root: {
@@ -33,6 +34,7 @@ const useStyles = createStyles((t) => ({
 
 export default function Testing() {
     const styles = useStyles();
+    const router = useTransitionRouter();
     const theme = useThemeStore((s) => s.theme);
     const setTheme = useThemeStore((s) => s.setTheme);
     const [hydrated, setHydrated] = useState(false);
@@ -74,6 +76,14 @@ export default function Testing() {
                         <Switch platform="ios" checked={false} disabled />
                     )}
                 </Cell>
+                <Cell
+                    label="主题调色板"
+                    desc="进入二级路由页调整主题颜色与数值 token"
+                    bordered={false}
+                    showArrow
+                    clickable
+                    onClick={() => router.push("/testing/palette")}
+                />
             </Cell.Group>
         </View>
     );

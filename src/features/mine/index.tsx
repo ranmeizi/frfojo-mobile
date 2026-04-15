@@ -33,10 +33,15 @@ const useHomeStyles = createStyles((t) => ({
     padding: `${t.space16} ${t.space16}`,
   },
   avatarRing: {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 3,
     borderRadius: t.radiusRound,
     background: `linear-gradient(135deg, ${t.colorBorder} 0%, ${t.colorBgTertiary} 100%)`,
     flexShrink: 0,
+    lineHeight: 0,
+    boxSizing: "content-box",
   },
   headerMain: {
     flex: 1,

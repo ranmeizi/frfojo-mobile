@@ -3,6 +3,7 @@
 import { useEffect, type ReactNode } from "react";
 import { EmotionProvider } from "@/lib/styles/EmotionProvider";
 import { ThemeHydrator } from "./theme-hydrator";
+import { ThemeTokenOverridesHydrator } from "./theme-token-overrides-hydrator";
 import setRootPixel from "@arco-design/mobile-react/tools/flexible";
 import { ArcoThemeProvider } from "./arco-theme-provider";
 import { View } from "@/components/adapt";
@@ -21,6 +22,7 @@ export function AppProviders({ children }: AppProvidersProps) {
     <EmotionProvider>
       <ArcoThemeProvider>
         <ThemeHydrator />
+        <ThemeTokenOverridesHydrator />
         <View
           style={{
             flex: 1,

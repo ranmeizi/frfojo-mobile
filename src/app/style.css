@@ -213,11 +213,11 @@ body {
 
 /* Home 沉浸底栏：透明背景上的白色导航（未选中略淡、选中纯白，与主题无关） */
 .app-tab-bar-immersive .arco-tab-bar-item {
-  color: rgba(255, 255, 255, 0.62) !important;
+  color: color-mix(in srgb, var(--token-color-text-inverse) 62%, transparent) !important;
 }
 
 .app-tab-bar-immersive .arco-tab-bar-item-active {
-  color: #ffffff !important;
+  color: var(--token-color-text-inverse) !important;
 }
 
 /*
@@ -229,4 +229,135 @@ body {
   -webkit-box-shadow: none !important;
   filter: none !important;
   backdrop-filter: none !important;
+}
+
+/* Switch 颜色桥接到 token（Arco 内置样式有硬编码色值） */
+.arco-switch.type-ios.checked,
+.arco-switch.type-android.checked {
+  background-color: var(--token-color-primary) !important;
+}
+
+.arco-switch.type-ios.disabled.checked,
+.arco-switch.type-android.disabled.checked {
+  opacity: 0.65;
+}
+
+/* Ghost Button 颜色桥接到 token（Arco 内置样式为硬编码色） */
+.arco-button.arco-button-type-ghost {
+  color: var(--token-color-primary) !important;
+}
+
+.arco-button.arco-button-type-ghost-disabled {
+  color: var(--token-color-primary) !important;
+  opacity: 0.45;
+}
+
+.arco-button.arco-button-type-ghost-active {
+  background: var(--token-color-bg-tertiary) !important;
+}
+
+.arco-button-type-ghost .bg-color-with-config {
+  background: var(--token-color-primary) !important;
+}
+
+.arco-button-type-ghost .stop-color-with-config {
+  stop-color: var(--token-color-primary) !important;
+}
+
+.arco-button-type-ghost .fill-color-with-config {
+  fill: var(--token-color-primary) !important;
+}
+
+.arco-button-type-ghost .stroke-color-with-config {
+  stroke: var(--token-color-primary) !important;
+}
+
+/* Button primary/default 也桥接到 token */
+.arco-button.arco-button-type-primary {
+  background: var(--token-color-primary) !important;
+  color: var(--token-color-text-inverse) !important;
+}
+
+.arco-button.arco-button-type-primary-disabled {
+  background: var(--token-color-primary) !important;
+  color: var(--token-color-text-inverse) !important;
+  opacity: 0.45;
+}
+
+.arco-button.arco-button-type-default {
+  background: var(--token-color-bg-tertiary) !important;
+  color: var(--token-color-primary) !important;
+}
+
+.arco-button.arco-button-type-default-disabled {
+  background: var(--token-color-bg-tertiary) !important;
+  color: var(--token-color-primary) !important;
+  opacity: 0.45;
+}
+
+/* Radio / Checkbox 主色桥接 */
+.arco-radio .radio-icon.checked,
+.arco-checkbox .checkbox-icon.checked {
+  color: var(--token-color-primary) !important;
+}
+
+.arco-radio .radio-text,
+.arco-checkbox .checkbox-text {
+  color: var(--token-color-text) !important;
+}
+
+/* Slider 主色桥接 */
+.arco-slider-line.is-activated {
+  background: var(--token-color-primary) !important;
+}
+
+.is-disabled .arco-slider-line.is-activated {
+  opacity: 0.45;
+}
+
+/* Progress 主色桥接 */
+.arco-progress .progress-wrapper .progress-bar,
+.arco-progress .progress-wrapper .text-follow {
+  background-color: var(--token-color-primary) !important;
+}
+
+.arco-progress .progress-wrapper .text,
+.arco-progress .progress-wrapper .color {
+  color: var(--token-color-primary) !important;
+  stroke: var(--token-color-primary) !important;
+}
+
+.arco-progress .progress-wrapper .text-follow,
+.arco-progress .progress-wrapper .text-innerLeft,
+.arco-progress .progress-wrapper .text-center {
+  color: var(--token-color-text-inverse) !important;
+}
+
+/* Tabs active 色桥接到 token */
+.arco-tab-cell-underline-inner {
+  background-color: var(--token-color-primary) !important;
+}
+
+.arco-tab-cell.vertical:not(.custom).line.active,
+.arco-tab-cell.vertical:not(.custom).line-divide.active,
+.arco-tab-cell.horizontal:not(.custom).line.active,
+.arco-tab-cell.horizontal:not(.custom).line-divide.active {
+  color: var(--token-color-primary) !important;
+}
+
+.arco-tab-cell.vertical:not(.custom).card,
+.arco-tab-cell.horizontal:not(.custom).card {
+  color: var(--token-color-primary) !important;
+}
+
+.arco-tab-cell.vertical:not(.custom).card.active,
+.arco-tab-cell.horizontal:not(.custom).card.active {
+  background: var(--token-color-primary) !important;
+  color: var(--token-color-text-inverse) !important;
+}
+
+.arco-tab-cell.vertical:not(.custom).card:not(:last-child),
+.arco-tab-cell.horizontal:not(.custom).card:not(:last-child),
+.arco-tab-cell-container.type-card {
+  border-color: var(--token-color-primary) !important;
 }
