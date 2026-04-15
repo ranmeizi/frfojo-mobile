@@ -213,15 +213,19 @@ body {
 
 /* Home 沉浸底栏：透明背景上的白色导航（未选中略淡、选中纯白，与主题无关） */
 .app-tab-bar-immersive .arco-tab-bar-item {
-  color: color-mix(in srgb, var(--token-color-text-inverse) 62%, transparent) !important;
+  color: #ffffff !important;
 }
 
 .app-tab-bar-immersive .arco-tab-bar-item-active {
-  color: var(--token-color-text-inverse) !important;
+  color: var(--token-color-primary) !important;
 }
 
 .app-tab-bar-default .arco-tab-bar-item {
   color: var(--token-color-text-secondary) !important;
+}
+
+.app-tab-bar-default .arco-tab-bar-item-active {
+  color: var(--token-color-primary) !important;
 }
 
 /*

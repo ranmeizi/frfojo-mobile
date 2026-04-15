@@ -82,7 +82,7 @@ export default function AppTabBar(props: AppTabBarProps) {
     });
     const mergedActiveIndex = activeIndex >= 0 ? activeIndex : 0;
     const mergedActiveCustomStyle = immersive
-        ? { color: "var(--token-color-text-inverse)", ...activeCustomStyle }
+        ? { color: "var(--token-color-primary)", ...activeCustomStyle }
         : { color: tokens.colorPrimary, ...activeCustomStyle };
 
     return (

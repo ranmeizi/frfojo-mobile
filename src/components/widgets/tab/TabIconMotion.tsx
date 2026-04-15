@@ -42,7 +42,7 @@ export default function TabIconMotion({ icon, active, immersive = false }: TabIc
               width: 22,
               height: 22,
               borderRadius: 999,
-              background: immersive ? "var(--token-color-text-inverse)" : "currentColor",
+              background: "currentColor",
               pointerEvents: "none",
               filter: "blur(0.4px)",
             }}
