@@ -7,14 +7,10 @@ import {
 } from "@arco-design/mobile-react";
 import { arcoImperativeContext } from "@/lib/arco-imperative-context";
 
-type AnyFunc = (...args: unknown[]) => unknown;
-
-function withArcoContext<T extends AnyFunc>(fn: T) {
-  return (...args: Parameters<T>): ReturnType<T> =>
-    (fn as (...innerArgs: unknown[]) => unknown)(
-      ...args,
-      arcoImperativeContext,
-    ) as ReturnType<T>;
+function withArcoContext<Args extends unknown[], ReturnValue>(
+  fn: (...args: [...Args, typeof arcoImperativeContext?]) => ReturnValue,
+) {
+  return (...args: Args): ReturnValue => fn(...args, arcoImperativeContext);
 }
 
 export const Toast = {
@@ -28,7 +24,6 @@ export const arcoNotify = {
   success: withArcoContext(ArcoNotify.success),
   error: withArcoContext(ArcoNotify.error),
   info: withArcoContext(ArcoNotify.info),
-  warning: withArcoContext(ArcoNotify.warning),
 };
 
 export const arcoDialog = {
