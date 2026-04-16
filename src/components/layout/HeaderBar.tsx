@@ -11,7 +11,7 @@ type HeaderBarProps = {
 
 const useStyles = createStyles((t) => ({
   root: {
-    height: "44px",
+    height: "0.88rem",
     padding: `0 ${t.space16}`,
     display: "flex",
     alignItems: "center",
@@ -21,7 +21,7 @@ const useStyles = createStyles((t) => ({
     borderBottom: `1px solid ${t.colorBorder}`,
   },
   side: {
-    minWidth: "44px",
+    minWidth: "0.88rem",
   },
   title: {
     fontSize: t.fontSizeLg,

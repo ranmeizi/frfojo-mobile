@@ -5,16 +5,13 @@ import {
   ActionSheet,
   Button,
   Cell,
-  Dialog,
   Divider,
   Loading,
   NoticeBar,
-  Notify,
   Popup,
-  Toast,
 } from "@arco-design/mobile-react";
 import { View } from "@/components/adapt";
-import { arcoImperativeContext } from "@/lib/arco-imperative-context";
+import { arcoDialog, arcoNotify, Toast } from "@/lib/arco-imperative";
 import { createStyles } from "@/lib/styles/create-styles";
 
 const useStyles = createStyles((t) => ({
@@ -44,14 +41,14 @@ export default function ExampleFeedback() {
           <Cell
             label="Notify"
             desc="顶部通知"
-            onClick={() => Notify.success("Notify success", arcoImperativeContext)}
+            onClick={() => arcoNotify.success("Notify success")}
             showArrow
             clickable
           />
           <Cell
             label="Toast"
             desc="轻提示"
-            onClick={() => Toast.success("Toast success", arcoImperativeContext)}
+            onClick={() => Toast.success("Toast success")}
             showArrow
             clickable
           />
@@ -67,13 +64,10 @@ export default function ExampleFeedback() {
           <Button
             type="ghost"
             onClick={() =>
-              Dialog.confirm(
-                {
-                  title: "Confirm",
-                  children: "检查 Dialog 的主题是否同步",
-                },
-                arcoImperativeContext,
-              )
+              arcoDialog.confirm({
+                title: "Confirm",
+                children: "检查 Dialog 的主题是否同步",
+              })
             }
           >
             Dialog

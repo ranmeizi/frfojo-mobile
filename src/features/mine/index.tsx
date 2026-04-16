@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { Link } from "next-view-transitions";
-import { Avatar, Button, Cell, Dialog, Input, Toast } from "@arco-design/mobile-react";
+import { Avatar, Button, Cell } from "@arco-design/mobile-react";
 import {
   IconArrowDown,
   IconEdit,
@@ -19,7 +19,7 @@ import {
 import { View } from "@/components/adapt";
 import { MineDivider, MineListIconSlot, MineSectionLabel } from "@/features/mine/ui";
 import { mineCellGroupClass, useMineSubStyles } from "@/features/mine/sub-styles";
-import { arcoImperativeContext } from "@/lib/arco-imperative-context";
+import { arcoDialog, Toast } from "@/lib/arco-imperative";
 import { createStyles } from "@/lib/styles/create-styles";
 
 const DEMO_AVATAR =
@@ -136,18 +136,15 @@ export default function Mine() {
   const styles = useHomeStyles();
 
   const confirmLogout = () => {
-    Dialog.confirm(
-      {
-        title: "退出登录",
-        children: "确定要退出当前账号吗？",
-        okText: "退出",
-        cancelText: "取消",
-        onOk: () => {
-          Toast.success("已退出（演示）", arcoImperativeContext);
-        },
+    arcoDialog.confirm({
+      title: "退出登录",
+      children: "确定要退出当前账号吗？",
+      okText: "退出",
+      cancelText: "取消",
+      onOk: () => {
+        Toast.success("已退出（演示）");
       },
-      arcoImperativeContext,
-    );
+    });
   };
 
   return (

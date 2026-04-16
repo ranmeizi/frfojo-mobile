@@ -39,12 +39,12 @@ export default function TabIconMotion({ icon, active, immersive = false }: TabIc
             transition={{ duration: 0.2, ease: "easeOut" }}
             style={{
               position: "absolute",
-              width: 22,
-              height: 22,
-              borderRadius: 999,
+              width: "0.44rem",
+              height: "0.44rem",
+              borderRadius: "19.98rem",
               background: "currentColor",
               pointerEvents: "none",
-              filter: "blur(0.4px)",
+              filter: "blur(0.008rem)",
             }}
           />
         ) : null}

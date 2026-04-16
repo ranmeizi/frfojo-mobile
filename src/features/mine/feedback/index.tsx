@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Textarea, Toast } from "@arco-design/mobile-react";
+import { Button, Textarea } from "@arco-design/mobile-react";
 import { View } from "@/components/adapt";
-import { arcoImperativeContext } from "@/lib/arco-imperative-context";
+import { Toast } from "@/lib/arco-imperative";
 import { useMineSubStyles } from "@/features/mine/sub-styles";
 
 export default function MineFeedback() {
@@ -13,10 +13,10 @@ export default function MineFeedback() {
   const submit = () => {
     const v = text.trim();
     if (!v) {
-      Toast.error("请先填写反馈内容", arcoImperativeContext);
+      Toast.error("请先填写反馈内容");
       return;
     }
-    Toast.success("感谢反馈，我们已记录（演示）", arcoImperativeContext);
+    Toast.success("感谢反馈，我们已记录（演示）");
     setText("");
   };
 

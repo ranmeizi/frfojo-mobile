@@ -11,7 +11,7 @@ type AppBarProps = {
 
 const useStyles = createStyles((t) => ({
   root: {
-    height: "44px",
+    height: "0.88rem",
     padding: `0 ${t.space16}`,
     display: "flex",
     alignItems: "center",

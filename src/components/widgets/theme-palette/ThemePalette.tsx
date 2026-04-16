@@ -48,7 +48,7 @@ const useStyles = createStyles((t) => ({
   },
   row: {
     display: "grid",
-    gridTemplateColumns: "90px 1fr auto",
+    gridTemplateColumns: "1.8rem 1fr auto",
     alignItems: "center",
     gap: t.space8,
     marginBottom: t.space8,
@@ -59,7 +59,7 @@ const useStyles = createStyles((t) => ({
   },
   colorInput: {
     width: "100%",
-    height: 28,
+    height: "0.56rem",
     border: `1px solid ${t.colorBorder}`,
     borderRadius: t.radiusMd,
     background: "transparent",
@@ -77,8 +77,8 @@ const useStyles = createStyles((t) => ({
     accentColor: t.colorPrimary,
   },
   swatch: {
-    width: 20,
-    height: 20,
+    width: "0.4rem",
+    height: "0.4rem",
     borderRadius: 999,
     border: `1px solid ${t.colorBorder}`,
   },
@@ -175,9 +175,22 @@ function withAlpha(hex: string, alpha: number) {
   return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${clamp(alpha, 0, 1).toFixed(2)})`;
 }
 
-function pxToNumber(raw: string, fallback: number) {
+function tokenLengthToPx(raw: string, fallback: number) {
+  const normalized = raw.trim();
+  if (normalized.endsWith("rem")) {
+    const rem = Number.parseFloat(normalized.slice(0, -3));
+    return Number.isFinite(rem) ? rem * 50 : fallback;
+  }
+  if (normalized.endsWith("px")) {
+    const px = Number.parseFloat(normalized.slice(0, -2));
+    return Number.isFinite(px) ? px : fallback;
+  }
   const parsed = Number.parseFloat(raw);
   return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+function pxToRem(px: number) {
+  return `${(px / 50).toFixed(4).replace(/\.?0+$/, "")}rem`;
 }
 
 function lineHeightToNumber(raw: string, fallback: number) {
@@ -246,12 +259,12 @@ export default function ThemePalette() {
   });
 
   const readNumericValues = (): Record<NumericTokenKey, number> => ({
-    radiusMd: pxToNumber(tokens.radiusMd, 10),
-    radiusLg: pxToNumber(tokens.radiusLg, 14),
-    space12: pxToNumber(tokens.space12, 12),
-    space16: pxToNumber(tokens.space16, 16),
-    fontSizeMd: pxToNumber(tokens.fontSizeMd, 14),
-    fontSizeLg: pxToNumber(tokens.fontSizeLg, 16),
+    radiusMd: tokenLengthToPx(tokens.radiusMd, 10),
+    radiusLg: tokenLengthToPx(tokens.radiusLg, 14),
+    space12: tokenLengthToPx(tokens.space12, 12),
+    space16: tokenLengthToPx(tokens.space16, 16),
+    fontSizeMd: tokenLengthToPx(tokens.fontSizeMd, 14),
+    fontSizeLg: tokenLengthToPx(tokens.fontSizeLg, 16),
   });
 
   const [baseColors, setBaseColors] = useState<BaseColorState>(() => readBaseColors());
@@ -268,12 +281,12 @@ export default function ThemePalette() {
       patchThemeOverrides(theme, {
         ...nextBase,
         ...buildDerivedColors(nextBase, theme),
-        radiusMd: `${nextNumeric.radiusMd}px`,
-        radiusLg: `${nextNumeric.radiusLg}px`,
-        space12: `${nextNumeric.space12}px`,
-        space16: `${nextNumeric.space16}px`,
-        fontSizeMd: `${nextNumeric.fontSizeMd}px`,
-        fontSizeLg: `${nextNumeric.fontSizeLg}px`,
+        radiusMd: pxToRem(nextNumeric.radiusMd),
+        radiusLg: pxToRem(nextNumeric.radiusLg),
+        space12: pxToRem(nextNumeric.space12),
+        space16: pxToRem(nextNumeric.space16),
+        fontSizeMd: pxToRem(nextNumeric.fontSizeMd),
+        fontSizeLg: pxToRem(nextNumeric.fontSizeLg),
         lineHeightTight: String(lineHeightToNumber(tokens.lineHeightTight, 1.3)),
         lineHeightNormal: String(lineHeightToNumber(tokens.lineHeightNormal, 1.5)),
         lineHeightLoose: String(lineHeightToNumber(tokens.lineHeightLoose, 1.7)),
@@ -303,12 +316,12 @@ export default function ThemePalette() {
         colorBg: latestOverrides.colorBg ?? resolveCssVarValue(BASE_COLOR_CSS_VAR_MAP.colorBg, tokens.colorBg),
       });
       setNumericValues({
-        radiusMd: pxToNumber(latestOverrides.radiusMd ?? tokens.radiusMd, 10),
-        radiusLg: pxToNumber(latestOverrides.radiusLg ?? tokens.radiusLg, 14),
-        space12: pxToNumber(latestOverrides.space12 ?? tokens.space12, 12),
-        space16: pxToNumber(latestOverrides.space16 ?? tokens.space16, 16),
-        fontSizeMd: pxToNumber(latestOverrides.fontSizeMd ?? tokens.fontSizeMd, 14),
-        fontSizeLg: pxToNumber(latestOverrides.fontSizeLg ?? tokens.fontSizeLg, 16),
+        radiusMd: tokenLengthToPx(latestOverrides.radiusMd ?? tokens.radiusMd, 10),
+        radiusLg: tokenLengthToPx(latestOverrides.radiusLg ?? tokens.radiusLg, 14),
+        space12: tokenLengthToPx(latestOverrides.space12 ?? tokens.space12, 12),
+        space16: tokenLengthToPx(latestOverrides.space16 ?? tokens.space16, 16),
+        fontSizeMd: tokenLengthToPx(latestOverrides.fontSizeMd ?? tokens.fontSizeMd, 14),
+        fontSizeLg: tokenLengthToPx(latestOverrides.fontSizeLg ?? tokens.fontSizeLg, 16),
       });
     }, 0);
     return () => {
@@ -426,12 +439,12 @@ export default function ThemePalette() {
                   colorBg: resolveCssVarValue(BASE_COLOR_CSS_VAR_MAP.colorBg, tokens.colorBg),
                 });
                 setNumericValues({
-                  radiusMd: pxToNumber(tokens.radiusMd, 10),
-                  radiusLg: pxToNumber(tokens.radiusLg, 14),
-                  space12: pxToNumber(tokens.space12, 12),
-                  space16: pxToNumber(tokens.space16, 16),
-                  fontSizeMd: pxToNumber(tokens.fontSizeMd, 14),
-                  fontSizeLg: pxToNumber(tokens.fontSizeLg, 16),
+                  radiusMd: tokenLengthToPx(tokens.radiusMd, 10),
+                  radiusLg: tokenLengthToPx(tokens.radiusLg, 14),
+                  space12: tokenLengthToPx(tokens.space12, 12),
+                  space16: tokenLengthToPx(tokens.space16, 16),
+                  fontSizeMd: tokenLengthToPx(tokens.fontSizeMd, 14),
+                  fontSizeLg: tokenLengthToPx(tokens.fontSizeLg, 16),
                 });
               }, 0);
             }}

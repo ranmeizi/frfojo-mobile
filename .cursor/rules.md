@@ -8,7 +8,8 @@
 
 ## Arco Mobile
 
-- 项目启用了 **`setRootPixel`（rem）**，Cell/Divider 等默认 **rem** 易与 **px 文案**脱节；Mine 已用全局 CSS 压平，**其他页**若出现「字特大/间距怪」，优先在局部 scope 类下用 **px 覆盖**，勿到处 `!important`。
+- 项目启用了 **`setRootPixel`（rem）**，新增页面/组件样式默认使用 **rem**（优先复用 token），避免直接写死 px。
+- 仅在第三方组件适配缺陷、1px hairline、或历史兼容场景下允许用 **px**，并限制在局部 scope，禁止到处 `!important`。
 - 命令式 `Toast` / `Dialog` 等需传 **`arcoImperativeContext`**（见 `arco-imperative-context.ts`）。
 
 ## 样式

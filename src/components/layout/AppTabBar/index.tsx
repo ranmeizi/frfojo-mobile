@@ -54,14 +54,18 @@ const useStyles = createStyles((t) => ({
     root: {
         background: t.colorTabBarBg,
         borderTop: `1px solid ${t.colorBorder}`,
+        minHeight: "1.02rem",
         paddingBottom: "var(--safe-area-bottom)",
         boxShadow: t.shadow1,
+        boxSizing: "border-box",
     },
     rootImmersive: {
         background: "transparent",
         borderTop: "none",
         boxShadow: "none",
+        minHeight: "1.02rem",
         paddingBottom: "var(--safe-area-bottom)",
+        boxSizing: "border-box",
     },
 }));
 
@@ -82,7 +86,7 @@ export default function AppTabBar(props: AppTabBarProps) {
     });
     const mergedActiveIndex = activeIndex >= 0 ? activeIndex : 0;
     const mergedActiveCustomStyle = immersive
-        ? { color: "var(--token-color-primary)", ...activeCustomStyle }
+        ? { color: tokens.colorPrimary, ...activeCustomStyle }
         : { color: tokens.colorPrimary, ...activeCustomStyle };
 
     return (

@@ -46,7 +46,7 @@ export default function Example() {
           <Cell
             label="Data Entry"
             desc={<span className={styles.itemDesc}>Input, SearchBar, Textarea, Slider, Stepper, Rate, Checkbox, Radio, Switch</span>}
-            style={{ minHeight: 68 }}
+            style={{ minHeight: "1.36rem" }}
             showArrow
           />
         </Link>
@@ -54,7 +54,7 @@ export default function Example() {
           <Cell
             label="Data Display"
             desc={<span className={styles.itemDesc}>Avatar, Badge, Tag, Cell, Collapse, Tabs, Progress, Skeleton</span>}
-            style={{ minHeight: 68 }}
+            style={{ minHeight: "1.36rem" }}
             showArrow
           />
         </Link>
@@ -62,7 +62,15 @@ export default function Example() {
           <Cell
             label="Feedback & Overlay"
             desc={<span className={styles.itemDesc}>Toast, Notify, Dialog, Popup, ActionSheet, Loading, NoticeBar</span>}
-            style={{ minHeight: 68 }}
+            style={{ minHeight: "1.36rem" }}
+            showArrow
+          />
+        </Link>
+        <Link href="/example/form">
+          <Cell
+            label="Form"
+            desc={<span className={styles.itemDesc}>Arco Form 原生用法：校验、提交、表单实例调用</span>}
+            style={{ minHeight: "1.36rem" }}
             showArrow
           />
         </Link>
@@ -70,7 +78,7 @@ export default function Example() {
           <Cell
             label="Navigation"
             desc={<span className={styles.itemDesc}>NavBar, TabBar, Divider, Button（导航相关主题验证）</span>}
-            style={{ minHeight: 68 }}
+            style={{ minHeight: "1.36rem" }}
             showArrow
           />
         </Link>
@@ -78,7 +86,7 @@ export default function Example() {
           <Cell
             label="Pull Refresh"
             desc={<span className={styles.itemDesc}>下拉刷新（Arco PullRefresh + 空 onRefresh）</span>}
-            style={{ minHeight: 68 }}
+            style={{ minHeight: "1.36rem" }}
             bordered={false}
             showArrow
           />

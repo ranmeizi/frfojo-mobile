@@ -40,7 +40,7 @@ const nextConfig: NextConfig = {
       assetPrefix: basePath || undefined,
     }
     : {}),
-  reactStrictMode: false
+  reactStrictMode: false,
 };
 
 export default nextConfig;

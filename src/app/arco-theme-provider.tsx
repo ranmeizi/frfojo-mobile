@@ -22,9 +22,9 @@ const ARCO_THEME_TOKEN_BRIDGE: Record<string, string> = {
   "fill-color-2": "var(--token-color-bg-tertiary)",
   "bg-color": "var(--token-color-bg)",
   "mask-bg": "var(--token-color-mask)",
-  "font-size-body": "14px",
-  "radius-medium": "10px",
-  "radius-large": "14px",
+  "font-size-body": "0.28rem",
+  "radius-medium": "0.2rem",
+  "radius-large": "0.28rem",
 };
 
 const ARCO_THEME_MAP: Record<ThemeMode, Record<string, string>> = {

@@ -91,50 +91,50 @@ body {
  * 仅在带 .mine-cell-scope 的 Cell.Group 上覆盖为固定 px，与 theme token 一致。
  */
 .mine-cell-scope .arco-cell {
-  font-size: 14px;
-  /* 原 margin-left + padding-right 用 rem，和改小的字号不配；改为统一水平 16px */
+  font-size: 0.28rem;
+  /* 原 margin-left + padding-right 用 rem，和改小的字号不配；改为统一水平 0.32rem */
   margin-left: 0;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 0.32rem;
+  padding-right: 0.32rem;
   box-sizing: border-box;
 }
 .mine-cell-scope .arco-cell .cell-desc {
-  font-size: 12px;
+  font-size: 0.24rem;
   line-height: 1.45;
-  margin-top: 2px;
+  margin-top: 0.04rem;
 }
 .mine-cell-scope .arco-cell .cell-content .cell-text {
-  font-size: 13px;
+  font-size: 0.26rem;
 }
 .mine-cell-scope .arco-cell .cell-label-icon .arco-icon {
-  font-size: 18px;
+  font-size: 0.36rem;
 }
 .mine-cell-scope .arco-cell .cell-arrow-icon .arco-icon {
-  font-size: 14px;
+  font-size: 0.28rem;
 }
 /* 原 .arco-cell-inner 固定 height: 1.08rem / has-desc 1.48rem，行高过大 */
 .mine-cell-scope .arco-cell-inner {
   height: auto !important;
-  min-height: 48px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  min-height: 0.96rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
   box-sizing: border-box;
 }
 .mine-cell-scope .arco-cell-inner.has-desc {
   height: auto !important;
-  min-height: 56px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  min-height: 1.12rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
   align-items: center;
 }
 .mine-cell-scope .arco-cell .cell-label {
-  margin-right: 12px;
+  margin-right: 0.24rem;
 }
 .mine-cell-scope .arco-cell .cell-label-icon {
-  margin-right: 8px;
+  margin-right: 0.16rem;
 }
 .mine-cell-scope .arco-cell .cell-arrow-icon {
-  margin-left: 8px;
+  margin-left: 0.16rem;
 }
 
 /*
@@ -144,7 +144,7 @@ body {
 .mine-cell-scope .mine-cell-divider.arco-divider {
   display: flex;
   margin: 0;
-  padding: 5px 16px;
+  padding: 0.1rem 0.32rem;
   box-sizing: border-box;
   border-color: var(--token-color-border);
   opacity: 1;
@@ -177,11 +177,13 @@ body {
     opacity: 1;
     transform: translateX(0) scale(1) translateZ(0);
     filter: blur(0);
+    z-index: 10;
   }
   to {
-    opacity: 0.35;
+    opacity: 0;
     transform: translateX(-10%) scale(0.98) translateZ(0);
     filter: blur(2px);
+    z-index: 1;
   }
 }
 
@@ -190,11 +192,13 @@ body {
     opacity: 0;
     transform: translateY(18px) scale(0.92) translateZ(0);
     filter: blur(2px);
+    z-index: 1;
   }
   to {
     opacity: 1;
     transform: translateY(0) scale(1) translateZ(0);
     filter: blur(0);
+    z-index: 10;
   }
 }
 
@@ -233,9 +237,10 @@ body {
  * 来源通常是外层 token 的 box-shadow，或透明叠层下的对比错觉；这里对 Arco 根节点显式清零。
  */
 .app-tab-bar-immersive.arco-tab-bar {
-  box-shadow: none !important;
   -webkit-box-shadow: none !important;
+  box-shadow: none !important;
   filter: none !important;
+  -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
 }
 

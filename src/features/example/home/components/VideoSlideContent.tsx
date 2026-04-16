@@ -58,11 +58,11 @@ const metaBlock: CSSProperties = {
 const rightRail: CSSProperties = {
   position: "absolute",
   right: "0.16rem",
-  bottom: "calc(1.02rem + var(--safe-area-bottom) + 0.76rem)",
+  bottom: "calc(1.02rem + var(--safe-area-bottom) + 0.92rem)",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  gap: "0.34rem",
+  gap: "0.42rem",
   color: "#fff",
   pointerEvents: "auto",
   zIndex: 4,
@@ -72,20 +72,20 @@ const railBtn: CSSProperties = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  gap: "0.08rem",
-  padding: 0,
+  gap: "0.1rem",
+  padding: "0.08rem 0.04rem",
   margin: 0,
   border: "none",
   background: "transparent",
   color: "inherit",
   cursor: "pointer",
-  fontSize: "0.48rem",
+  fontSize: "0.56rem",
   lineHeight: 1,
   textShadow: "0 1px 3px rgba(0,0,0,0.65)",
 };
 
 const railCap: CSSProperties = {
-  fontSize: "0.22rem",
+  fontSize: "0.24rem",
   opacity: 0.92,
   textShadow: "0 1px 2px rgba(0,0,0,0.6)",
 };
