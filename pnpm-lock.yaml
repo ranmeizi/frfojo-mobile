@@ -11,6 +11,9 @@ importers:
       '@arco-design/mobile-react':
         specifier: ^2.39.0
         version: 2.39.0(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react-transition-group@4.4.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
+      '@arco-design/mobile-utils':
+        specifier: ^2.23.5
+        version: 2.23.5
       '@emotion/cache':
         specifier: ^11.14.0
         version: 11.14.0
