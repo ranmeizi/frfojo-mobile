@@ -91,6 +91,15 @@ export default function Example() {
             showArrow
           />
         </Link>
+        <Link href="/example/share">
+          <Cell
+            label="Share Meta Demo"
+            desc={<span className={styles.itemDesc}>3 个内容页，演示 OG Card / Twitter Card 元数据优化</span>}
+            style={{ minHeight: "1.36rem" }}
+            bordered={false}
+            showArrow
+          />
+        </Link>
       </Cell.Group>
     </View>
   );

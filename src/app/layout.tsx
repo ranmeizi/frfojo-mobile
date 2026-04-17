@@ -3,7 +3,6 @@ import { AppProviders } from "@/app/providers";
 import { ViewTransitions } from "next-view-transitions";
 import "./arco.css";
 import "./style.css";
-import { createStyles } from "@/lib/styles/create-styles";
 
 /**
  * 首屏主题预初始化脚本（Pre-hydration Theme Init Script）
@@ -101,12 +100,36 @@ const ROOT_PIXEL_INIT_SCRIPT = `
 })();
 `;
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Frfojo Mobile",
     template: "%s | Frfojo Mobile",
   },
   description: "Frfojo 移动端应用",
+  openGraph: {
+    type: "website",
+    siteName: "Frfojo Mobile",
+    title: "Frfojo Mobile",
+    description: "Frfojo 移动端应用",
+    url: "/",
+    images: [
+      {
+        url: "https://picsum.photos/seed/frfojo-app-og/1200/630",
+        width: 1200,
+        height: 630,
+        alt: "Frfojo Mobile 默认分享卡片",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Frfojo Mobile",
+    description: "Frfojo 移动端应用",
+    images: ["https://picsum.photos/seed/frfojo-app-og/1200/630"],
+  },
 };
 
 export default function RootLayout({
